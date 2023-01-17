@@ -15,12 +15,32 @@
                         <thead>
                             <tr>
                                 <th scope="col">Nome</th>
+                                <th>Azioni</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($type->projects as $project)
                                 <tr>
                                     <th scope="row">{{ $project->title }}</th>
+                                    <td>
+                                        <a class="btn btn-success" href="{{ route('admin.projects.show', $project->slug) }}">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+                                        <a class="btn btn-warning"
+                                            href="{{ route('admin.projects.edit', $project->slug) }}">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <form action="{{ route('admin.projects.destroy', $project->slug) }}" method="POST"
+                                            class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit" class="btn btn-danger delete-btn"
+                                                data-project-title="{{ $project->title }}">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -30,5 +50,6 @@
                 @endif
             </div>
         </div>
+        @include('partials.delete-modal')
     </div>
 @endsection
