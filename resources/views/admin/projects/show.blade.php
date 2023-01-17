@@ -12,6 +12,13 @@
                 @endif
                 <h1 class="text-center mt-3">{{ $project->title }}</h1>
                 <h4 class="mt-3 text-success">{{ $project->type ? $project->type->name : 'Nessuna categoria' }}</h4>
+                <div class="flex">
+                    @forelse ($project->technologies as $technology)
+                        <span>#{{ $technology->name }}</span>
+                    @empty
+                        <span>Nessuna tecnologia usata</span>
+                    @endforelse
+                </div>
                 <div class="d-flex justify-content-between mt-3">
                     <h5>{{ $project->created_at }}</h5>
                     <p>{{ $project->slug }}</p>

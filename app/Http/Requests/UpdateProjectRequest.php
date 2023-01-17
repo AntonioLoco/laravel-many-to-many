@@ -30,6 +30,7 @@ class UpdateProjectRequest extends FormRequest
             "link" => ["max:255"],
             "type_id" => ["nullable", "exists:types,id"],
             "image_cover" => ["nullable", "image", "max:512"],
+            "technologies" => ["exists:technologies,id"]
         ];
     }
 

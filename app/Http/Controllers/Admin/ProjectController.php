@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -32,7 +33,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view("admin.projects.create", compact("types"));
+        $technologies = Technology::all();
+        return view("admin.projects.create", compact("types", "technologies"));
     }
 
     /**
@@ -53,6 +55,10 @@ class ProjectController extends Controller
 
         //Shortcut per riempire i dati, serve sempre fillable
         $newProject = Project::create($form_data);
+
+        if ($request->has("technologies")) {
+            $newProject->technologies()->attach($form_data["technologies"]);
+        }
 
         return redirect()->route("admin.projects.show", $newProject->slug)->with('message', "$newProject->title creato con successo");
     }
@@ -77,7 +83,8 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
-        return view("admin.projects.edit", compact("project", "types"));
+        $technologies = Technology::all();
+        return view("admin.projects.edit", compact("project", "types", "technologies"));
     }
 
     /**
@@ -104,6 +111,16 @@ class ProjectController extends Controller
         }
 
         $project->update($form_data);
+
+        //Se riceviamo le tecnlogie 
+        if ($request->has('technologies')) {
+            //Sincronizzo le tecnologie con quelle presenti
+            $project->technologies()->sync($form_data["technologies"]);
+        } else {
+            //Rimuovo le tecnologie
+            $project->technologies()->detach();
+        }
+
         return redirect()->route("admin.projects.show", $project->slug)->with('message', "$project->title modificato con successo!");;
     }
 

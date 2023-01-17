@@ -40,6 +40,18 @@
                         </select>
                     </div>
                     <div class="mb-3">
+                        <h5 class="mb-2">Tecnologie</h5>
+                        @foreach ($technologies as $technology)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="{{ $technology->id }}"
+                                    id="technologies-{{ $technology->id }}" name="technologies[]"
+                                    @checked($project->technologies->contains($technology))>
+                                <label class="form-check-label"
+                                    for="technologies-{{ $technology->id }}">{{ $technology->name }}</label>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div class="mb-3">
                         <label for="image_cover" class="form-label">Immagine</label>
                         <input type="file" class="form-control" id="image_cover" name="image_cover">
                     </div>
