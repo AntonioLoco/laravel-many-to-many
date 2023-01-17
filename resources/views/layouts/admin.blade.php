@@ -61,16 +61,24 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white {{ Route::currentRouteName() === 'admin.projects.index' ? 'bg-secondary' : '' }}"
+                                <a class="nav-link text-white {{ preg_match('/\badmin.projects\b/', Route::currentRouteName()) ? 'bg-secondary' : '' }}"
                                     href="{{ route('admin.projects.index') }}">
                                     <i class="fa-solid fa-list"></i>
                                     Projects
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white {{ Route::currentRouteName() === 'admin.types.index' ? 'bg-secondary' : '' }}"
+                                <a class="nav-link text-white {{ preg_match('/\badmin.types\b/', Route::currentRouteName()) ? 'bg-secondary' : '' }}"
                                     href="{{ route('admin.types.index') }}">
+                                    <i class="fa-solid fa-folder"></i>
                                     Types
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white {{ preg_match('/\badmin.technologies\b/', Route::currentRouteName()) ? 'bg-secondary' : '' }}"
+                                    href="{{ route('admin.technologies.index') }}">
+                                    <i class="fa-solid fa-folder"></i>
+                                    Technologies
                                 </a>
                             </li>
                         </ul>

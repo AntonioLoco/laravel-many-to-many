@@ -121,7 +121,7 @@ class ProjectController extends Controller
             $project->technologies()->detach();
         }
 
-        return redirect()->route("admin.projects.show", $project->slug)->with('message', "$project->title modificato con successo!");;
+        return redirect()->route("admin.projects.show", $project->slug)->with('message', "$project->title modificato con successo!");
     }
 
     /**
@@ -135,7 +135,10 @@ class ProjectController extends Controller
         if ($project->image_cover) {
             Storage::delete($project->image_cover);
         }
+        //Elimino tutti i collegamenti con le tecnologie
+        $project->technologies()->detach();
         $project->delete();
-        return redirect()->route("admin.projects.index")->with("message", "$project->title è stato cancellato");
+        // return redirect()->route("admin.projects.index")->with("message", "$project->title è stato cancellato");
+        return redirect()->back()->with("message", "$project->title è stato cancellato");
     }
 }
