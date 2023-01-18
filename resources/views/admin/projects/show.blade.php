@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container mt-5">
+        <a href="{{ url()->previous() }}" class="btn btn-success"><i class="fa-solid fa-arrow-left"></i></a>
         <div class="row justify-content-center mt-3">
             <div class="col-8">
                 @if (session('message'))
